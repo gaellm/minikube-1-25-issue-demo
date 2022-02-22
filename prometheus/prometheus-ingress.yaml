@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress 
+metadata:
+  name: prometheus-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+  namespace: monitoring
+spec:
+  defaultBackend:
+    service:
+      name: prometheus-service
+      port:
+        number: 9090
+  rules:
+  - host: prometheus.kube
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name:  prometheus-service
+            port: 
+              number: 9090
